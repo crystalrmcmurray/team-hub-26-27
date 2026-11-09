@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team Hub 26-27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rail: #0D0B0E; --rail-2: #1E1A1F;
+    --ink: #7B1E3C; --ink-2: #8F2F4D; --ink-soft: #D9B3BF;
+    --chalk: #FBF5F7; --paper: #FFFFFF; --line: #EEDFE4; --line-strong: #DCC6CE;
+    --text: #1F171B; --muted: #7A6670;
+    --coral: #D8487A; --coral-soft: #FCE4ED;
+    --sil: #C9CDD3; --sil-2: #E9EBEE;
+    --gold: #E0A82E; --silver: #9AA3AD; --bronze: #B5733A;
+    --l6: #D8487A; --l7: #7B1E3C;
+    --glitter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23fff'%3E%3Ccircle cx='12' cy='20' r='1'/%3E%3Ccircle cx='48' cy='8' r='.7'/%3E%3Ccircle cx='90' cy='30' r='1.1'/%3E%3Ccircle cx='140' cy='14' r='.8'/%3E%3Ccircle cx='30' cy='70' r='.8'/%3E%3Ccircle cx='70' cy='60' r='1.2'/%3E%3Ccircle cx='120' cy='75' r='.7'/%3E%3Ccircle cx='150' cy='95' r='1'/%3E%3Ccircle cx='20' cy='120' r='1.1'/%3E%3Ccircle cx='60' cy='110' r='.7'/%3E%3Ccircle cx='100' cy='130' r='1'/%3E%3Ccircle cx='135' cy='150' r='.8'/%3E%3Ccircle cx='80' cy='150' r='.9'/%3E%3C/g%3E%3Cg fill='%23fff'%3E%3Cpath d='M40 40l1.2 3.8L45 45l-3.8 1.2L40 50l-1.2-3.8L35 45l3.8-1.2z'/%3E%3Cpath d='M118 108l1 3 3 1-3 1-1 3-1-3-3-1 3-1z'/%3E%3Cpath d='M150 50l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z'/%3E%3C/g%3E%3C/svg%3E");
+    --display: 'Bricolage Grotesque', system-ui, sans-serif;
+    --body: 'Figtree', system-ui, sans-serif;
+    --r-lg: 20px; --r: 12px; --r-sm: 8px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: var(--body); background: var(--chalk); color: var(--text); display: flex; min-height: 100vh; font-size: 15px; line-height: 1.45; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; border-radius: 4px; }
+
+  /* Rail */
+  nav { width: 248px; flex-shrink: 0; background: var(--rail); color: #fff; padding: 26px 16px 20px; display: flex; flex-direction: column; gap: 2px; position: sticky; top: 0; height: 100vh; position: sticky; overflow: hidden; }
+  .sparkle { position: relative; isolation: isolate; }
+  .sparkle::before, .sparkle::after { content: ''; position: absolute; inset: 0; background-image: var(--glitter); background-size: 160px 160px; pointer-events: none; z-index: 0; }
+  .sparkle::before { opacity: .55; }
+  .sparkle::after { opacity: .35; background-position: 80px 40px; }
+  .sparkle > * { position: relative; z-index: 1; }
+  nav .brand { font-family: var(--display); font-size: 22px; font-weight: 800; letter-spacing: -0.02em; padding: 0 12px 22px; line-height: 1.05; }
+  nav .brand .logo { display: block; width: 92px; margin: 0 0 16px; }
+  nav .brand small { display: block; font-family: var(--body); font-size: 12px; font-weight: 500; color: var(--sil); letter-spacing: 0; margin-top: 6px; }
+  nav button { background: none; border: 0; color: var(--sil); text-align: left; padding: 10px 12px; border-radius: var(--r-sm); font: inherit; font-size: 15px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+  nav button:hover { background: var(--rail-2); color: #fff; }
+  nav button.active { background: var(--ink); color: #fff; font-weight: 700; }
+  nav button .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .35; flex-shrink: 0; }
+  nav button.active .dot { background: var(--coral); opacity: 1; }
+  nav .updated { margin-top: auto; font-size: 12px; color: #8E8590; padding: 12px; line-height: 1.4; }
+
+  /* Main */
+  main { flex: 1; min-width: 0; padding: 36px 40px 72px; max-width: 1240px; }
+  h1 { font-family: var(--display); font-size: 40px; font-weight: 800; letter-spacing: -0.025em; margin: 0 0 6px; line-height: 1; }
+  .lede { color: var(--muted); font-size: 15px; margin: 0 0 24px; }
+  h2 { font-family: var(--display); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+  h3 { font-family: var(--display); font-size: 17px; font-weight: 700; margin: 0; }
+
+  .tabs { display: flex; gap: 2px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 2px; }
+  .tabs button { background: none; border: 0; padding: 9px 14px; font: inherit; font-size: 15px; font-weight: 500; color: var(--muted); cursor: pointer; border-radius: 999px; white-space: nowrap; }
+  .tabs button:hover { background: #F0ECE6; color: var(--text); }
+  .tabs button.active { background: var(--ink); color: #fff; font-weight: 600; }
+
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  input, select { background: var(--paper); color: var(--text); border: 1px solid var(--line-strong); border-radius: 999px; padding: 10px 16px; font: inherit; font-size: 14px; }
+  input[type=search] { min-width: 240px; flex: 1; }
+  select { padding-right: 36px; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23716A80' stroke-width='1.8'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+
+  .panel { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+  .scroll { overflow: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; font-variant-numeric: tabular-nums; }
+  th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  th { position: sticky; top: 0; background: var(--paper); color: var(--muted); font-weight: 600; font-size: 13px; cursor: pointer; user-select: none; box-shadow: inset 0 -1px 0 var(--line-strong); }
+  th.sorted { color: var(--text); }
+  td.num, th.num { text-align: right; }
+  td.lvl { border-left: 4px solid transparent; }
+  td.lvl.l6 { border-left-color: var(--l6); } td.lvl.l7 { border-left-color: var(--l7); }
+  tr.group td { background: var(--chalk); font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--ink); padding-top: 14px; padding-bottom: 10px; }
+  .score { font-weight: 600; }
+  .place { display: inline-block; min-width: 26px; text-align: center; font-size: 11.5px; font-weight: 700; color: var(--muted); margin-left: 8px; padding: 2px 6px; border-radius: 999px; background: #F0ECE6; vertical-align: 1px; }
+  .place.p1 { background: var(--gold); color: #fff; } .place.p2 { background: var(--silver); color: #fff; } .place.p3 { background: var(--bronze); color: #fff; }
+  .count { color: var(--muted); font-size: 13px; padding: 12px 16px; border-top: 1px solid var(--line); }
+  .empty { color: var(--muted); text-align: center; padding: 56px 20px; font-size: 15px; }
+  .empty strong { display: block; font-family: var(--display); font-size: 18px; color: var(--text); margin-bottom: 4px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+  .card header { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 20px 12px; }
+  .card header span { color: var(--muted); font-size: 13px; }
+  .card .scroll { max-height: 440px; }
+  .card table td { padding: 10px 20px; }
+  .rank { width: 34px; color: var(--muted); font-weight: 600; font-size: 13px; padding-right: 0 !important; }
+  .rank.m { color: #fff; }
+  .rank.m i { display: inline-flex; width: 22px; height: 22px; border-radius: 50%; align-items: center; justify-content: center; font-style: normal; font-size: 12px; }
+  .rank.m1 i { background: var(--gold); } .rank.m2 i { background: var(--silver); } .rank.m3 i { background: var(--bronze); }
+  .sub { color: var(--muted); font-size: 12.5px; margin-left: 8px; }
+
+  /* Home */
+  .hero { position: relative; background: linear-gradient(135deg, var(--ink) 0%, #5A1229 60%, var(--rail) 100%); color: #fff; border-radius: 28px; padding: 36px 40px; display: grid; grid-template-columns: auto 1fr; gap: 12px 48px; align-items: end; margin-bottom: 22px; overflow: hidden; }
+  .hero .glow { position: absolute; right: -60px; top: -90px; width: 360px; height: 360px; border-radius: 50%; background: radial-gradient(closest-side, rgba(216,72,122,.6), transparent 70%); pointer-events: none; z-index: 0; }
+  .hero .kicker { grid-column: 1 / -1; color: var(--ink-soft); font-size: 14px; font-weight: 500; }
+  .hero .days { font-family: var(--display); font-size: 148px; line-height: .85; font-weight: 800; letter-spacing: -0.05em; }
+  .hero .days small { display: block; font-size: 18px; font-weight: 600; letter-spacing: 0; color: var(--ink-soft); margin-top: 10px; }
+  .hero .meet h2 { font-size: 30px; color: #fff; line-height: 1.1; }
+  .hero .meet .when { color: var(--ink-soft); font-size: 16px; margin: 8px 0 16px; }
+  .chips span { display: inline-block; background: rgba(255,255,255,.12); color: #fff; border-radius: 999px; padding: 5px 12px; margin: 0 6px 6px 0; font-size: 13.5px; font-weight: 500; }
+  .hero .more { margin-top: 6px; }
+  .hero .more button, .ghost { background: none; border: 1px solid rgba(255,255,255,.35); color: #fff; border-radius: 999px; padding: 8px 16px; font: inherit; font-size: 14px; cursor: pointer; }
+  .hero .more button:hover { background: rgba(255,255,255,.1); }
+  .home-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+  .podium { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px 22px; }
+  .podium .row { display: flex; align-items: baseline; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); }
+  .podium .row:first-of-type { border-top: 0; }
+  .podium .who { flex: 1; font-weight: 600; font-size: 16px; }
+  .podium .who small { display: block; color: var(--muted); font-weight: 400; font-size: 13px; }
+  .podium .when-col { width: 64px; flex-shrink: 0; } .podium .when-col b { display: block; font-family: var(--display); font-size: 17px; color: var(--ink); } .podium .when-col small { color: var(--muted); font-size: 12px; }
+  .podium .sess { padding: 4px 0; cursor: pointer; } .podium .sess:hover { color: var(--ink); } .podium .sess small { display: block; color: var(--muted); font-weight: 400; font-size: 13px; }
+  .podium .val { font-family: var(--display); font-size: 28px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .fund { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px 22px; display: flex; flex-direction: column; }
+  .fund .big { font-family: var(--display); font-size: 44px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); margin: 6px 0 2px; font-variant-numeric: tabular-nums; }
+  .fund .bar { height: 8px; background: #F0ECE6; border-radius: 999px; overflow: hidden; margin: 14px 0 8px; }
+  .fund .bar i { display: block; height: 100%; background: var(--coral); border-radius: 999px; }
+  .fund .legend { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; }
+
+  /* Stats (chalk page) */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .stat { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px 26px; }
+  .stat .label { color: var(--muted); font-size: 14px; margin-bottom: 8px; }
+  .stat .value { font-family: var(--display); font-size: 40px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .stat.balance { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .stat.balance .label { color: var(--ink-soft); }
+
+  /* Calendar */
+  .cal-head { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .cal-head h2 { font-size: 26px; margin-right: auto; }
+  .btn { background: var(--paper); border: 1px solid var(--line-strong); border-radius: 999px; padding: 8px 14px; font: inherit; font-size: 14px; cursor: pointer; color: var(--text); }
+  .btn:hover { background: #F0ECE6; }
+  .btn.primary { background: var(--coral); border-color: var(--coral); color: #fff; font-weight: 600; }
+  .cal { display: grid; grid-template-columns: repeat(7, 1fr); background: var(--line); gap: 1px; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+  .cal .dow { background: var(--chalk); color: var(--muted); font-size: 12.5px; font-weight: 600; padding: 10px; text-align: center; }
+  .cal .day { background: var(--paper); min-height: 104px; padding: 8px; font-size: 13px; }
+  .cal .day.other { background: var(--chalk); color: #C3BCB2; }
+  .cal .dnum { display: inline-block; margin-bottom: 6px; color: var(--muted); font-weight: 600; font-size: 12.5px; }
+  .cal .day.today .dnum { background: var(--coral); color: #fff; border-radius: 999px; padding: 2px 8px; }
+  .ev { background: var(--ink); color: #fff; border-radius: 6px; padding: 4px 8px; font-size: 12.5px; font-weight: 500; margin-bottom: 4px; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ev:hover { background: var(--ink-2); }
+  .ev small { color: var(--ink-soft); margin-left: 6px; }
+  .upcoming { margin-top: 26px; }
+  .upcoming h2 { margin-bottom: 12px; }
+  .upcoming .row { display: grid; grid-template-columns: 120px 1fr auto; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--line); cursor: pointer; align-items: baseline; }
+  .upcoming .row:last-child { border-bottom: 0; }
+  .upcoming .row:hover { background: var(--chalk); }
+  .upcoming .date { font-family: var(--display); font-weight: 700; color: var(--ink); }
+  .upcoming .ath { color: var(--muted); font-size: 13px; text-align: right; max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* Modal */
+  .overlay { position: fixed; inset: 0; background: rgba(43,29,78,.55); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 10; }
+  .overlay.open { display: flex; }
+  .modal { background: var(--paper); border-radius: 24px; width: min(540px, 100%); padding: 26px 28px; box-shadow: 0 30px 80px rgba(30,24,48,.35); }
+  .modal h3 { font-size: 24px; margin: 0 0 16px; padding-right: 80px; }
+  .modal .kv { display: grid; grid-template-columns: 96px 1fr; gap: 12px 16px; font-size: 15px; }
+  .modal .k { color: var(--muted); }
+  .modal .chips span { background: var(--coral-soft); color: #B3203D; }
+  .modal .close { float: right; }
+
+  .error { background: #FFF1F3; color: #B3203D; border: 1px solid #FFC9D3; border-radius: var(--r); padding: 16px 18px; }
+  .gate { max-width: 420px; margin: 80px auto; }
+  .gate form { display: flex; gap: 8px; margin-top: 14px; }
+  .gate input { flex: 1; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero .days b { display: inline-block; animation: pop .5s cubic-bezier(.2,.9,.3,1.2) both; }
+    @keyframes pop { from { transform: translateY(14px); opacity: 0; } to { transform: none; opacity: 1; } }
+    .sparkle::before { animation: twinkle 3.2s ease-in-out infinite alternate; }
+    .sparkle::after { animation: twinkle 4.1s ease-in-out infinite alternate-reverse; }
+    @keyframes twinkle { from { opacity: .25; } to { opacity: .7; } }
+  }
+  .stat.balance { background: linear-gradient(135deg, var(--ink), #5A1229); border-color: transparent; }
+  .tabs button.active, .ev, .upcoming .date, .podium .val, .fund .big { color: #fff; }
+  .upcoming .date, .podium .val, .fund .big { color: var(--ink); }
+  .ev { background: var(--ink); } .ev:hover { background: var(--ink-2); }
+  .fund .bar { background: var(--sil-2); } .fund .bar i { background: linear-gradient(90deg, var(--ink), var(--coral)); }
+  .place { background: var(--sil-2); }
+  .rank.m2 i { background: var(--silver); }
+
+  @media (max-width: 900px) {
+    .home-grid { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: 1fr; padding: 28px 26px; }
+    .hero .days { font-size: 104px; }
+  }
+  @media (max-width: 760px) {
+    body { flex-direction: column; }
+    nav { width: auto; height: auto; position: static; flex-direction: row; flex-wrap: nowrap; overflow-x: auto; padding: 14px 12px; gap: 4px; align-items: center; }
+    nav .brand { padding: 0 10px 0 6px; font-size: 17px; white-space: nowrap; }
+    nav .brand small, nav .brand .logo { display: none; }
+    nav button { font-size: 13.5px; padding: 8px 12px; white-space: nowrap; }
+    nav .updated { display: none; }
+    main { padding: 22px 16px 48px; }
+    h1 { font-size: 30px; }
+    .hero .days { font-size: 84px; }
+    .hero .meet h2 { font-size: 22px; }
+    .cal .day { min-height: 68px; padding: 4px; }
+    .ev { font-size: 10px; padding: 2px 4px; } .ev small { display: none; }
+    .upcoming .row { grid-template-columns: 90px 1fr; } .upcoming .ath { display: none; }
+    th, td { padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+<nav id="nav"><div class="brand">Team Hub</div></nav>
+<main id="main"><div class="empty">Loading...</div></main>
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+
+<script>
+// ============================================================
+// CONFIG: edit this block
+// ============================================================
+const CONFIG = {
+  title: 'BIG Gymnastics',
+  subtitle: 'Team Hub, 2026-27 season',
+
+  // Team logo. Upload logo-white.png to the GitHub repo next to index.html.
+  logo: 'logo-white.png',
+
+  // Team colors. Change these and the whole page follows.
+  colors: {
+    rail:    '#0D0B0E',   // sidebar (black)
+    primary: '#7B1E3C',   // burgundy: headings, hero, active items
+    accent:  '#D8487A',   // rose: highlights, today marker, buttons
+  },
+  glitter: true,
+
+  // Published CSV URL for each tab of the Google Sheet.
+  sources: {
+    athletes: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCfjab-j_AbSVXVgjsZUNDUHmpnGy5cSUcbdgMzrnq-1Ayoyt2tU8DOf0T8tBi5AXDbv8xrdgvAl8Q/pub?gid=1091421500&single=true&output=csv', // tab: Full Roster
+    scores:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCfjab-j_AbSVXVgjsZUNDUHmpnGy5cSUcbdgMzrnq-1Ayoyt2tU8DOf0T8tBi5AXDbv8xrdgvAl8Q/pub?gid=873001730&single=true&output=csv',  // tab: Scores
+    meets:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCfjab-j_AbSVXVgjsZUNDUHmpnGy5cSUcbdgMzrnq-1Ayoyt2tU8DOf0T8tBi5AXDbv8xrdgvAl8Q/pub?gid=405107316&single=true&output=csv',  // tab: Calendar
+    chalk:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCfjab-j_AbSVXVgjsZUNDUHmpnGy5cSUcbdgMzrnq-1Ayoyt2tU8DOf0T8tBi5AXDbv8xrdgvAl8Q/pub?gid=1279714751&single=true&output=csv', // tab: Chalk Fund Balance
+    meta:     'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCfjab-j_AbSVXVgjsZUNDUHmpnGy5cSUcbdgMzrnq-1Ayoyt2tU8DOf0T8tBi5AXDbv8xrdgvAl8Q/pub?gid=675482059&single=true&output=csv',  // tab: Meta
+  },
+
+  fields: {
+    athletes: {
+      last: 'Last Name', first: 'First Name', preferred: 'Preferred Name', level: 'Level',
+      filterField: 'Group #', filterValue: '3',
+    },
+    scores: {
+      name: 'Name', date: 'Date', meet: 'Meet', session: 'Session', level: 'Level', division: 'Division',
+      events: { Vault: 'Vault', Bars: 'Bars', Beam: 'Beam', Floor: 'Floor', AA: 'AA' },
+      places: { Vault: 'Vault Place', Bars: 'Bars Place', Beam: 'Beam Place', Floor: 'Floor Place', AA: 'AA Place' },
+    },
+    meets: { name: 'Meet', date: 'Dates', time: 'Time', athletes: 'Athletes' },
+    chalk: { deposit: 'Deposit Total', spent: 'Amount Spent', balance: 'Calculation' },
+  },
+
+  rosterColumns: ['First Name', 'Last Name', 'Preferred Name', 'Level', 'Parents', 'Phone', 'E-mail', 'T Shirt Size', 'Favorite Color', 'Allergies'],
+
+  // How athlete names appear on the score pages: 'first' shows just the first name, 'full' shows the whole name.
+  nameStyle: 'first',
+
+  // Optional shared access code. Leave '' for an open page.
+  accessCode: '',
+
+  // Month a season starts (8 = August).
+  seasonStartMonth: 8,
+};
+// ============================================================
+
+const SECTIONS = [
+  ['home', 'Home'], ['roster', 'Team Roster'], ['calendar', 'Meet Calendar'], ['season', "This Season's Scores"],
+  ['best', 'Best Scores'], ['average', 'Average Scores'], ['chalk', 'Chalk Fund'],
+];
+const state = { section: 'home', data: {}, seasonTab: null, calMonth: null, sort: {}, filters: {} };
+
+/* ---------- Data loading ---------- */
+async function loadCsv(url) {
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error('Could not load data (' + res.status + ')');
+  return parseCsv(await res.text());
+}
+function parseCsv(text) {
+  const rows = []; let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i], n = text[i + 1];
+    if (q) { if (c === '"' && n === '"') { cell += '"'; i++; } else if (c === '"') q = false; else cell += c; }
+    else if (c === '"') q = true;
+    else if (c === ',') { row.push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && n === '\n') i++; row.push(cell); rows.push(row); row = []; cell = ''; }
+    else cell += c;
+  }
+  if (cell.length || row.length) { row.push(cell); rows.push(row); }
+  const header = (rows.shift() || []).map(h => h.trim());
+  return rows.filter(r => r.some(v => v !== '')).map(r => { const o = {}; header.forEach((h, i) => o[h] = (r[i] ?? '').trim()); return o; });
+}
+
+function gateOk() {
+  if (!CONFIG.accessCode) return true;
+  try { if (localStorage.getItem('teamhub_code') === CONFIG.accessCode) return true; } catch {}
+  return false;
+}
+function renderGate() {
+  const main = document.getElementById('main');
+  main.innerHTML = '<div class="panel gate" style="padding:28px"><h2>Enter the team access code</h2><p class="lede" style="margin:6px 0 0">Ask a coach or team parent if you need it.</p>' +
+    '<form id="gate"><input id="code" type="password" placeholder="Access code" autofocus><button class="btn primary">Open</button></form><div id="gateErr" style="color:#B3203D;font-size:13px;margin-top:10px"></div></div>';
+  document.getElementById('gate').onsubmit = e => {
+    e.preventDefault();
+    if (document.getElementById('code').value.trim() === CONFIG.accessCode) { try { localStorage.setItem('teamhub_code', CONFIG.accessCode); } catch {} init(); }
+    else document.getElementById('gateErr').textContent = 'That code did not match. Check for typos and try again.';
+  };
+}
+
+async function init() {
+  applyTheme();
+  document.title = CONFIG.title + (CONFIG.subtitle ? ' ' + CONFIG.subtitle : '');
+  if (!gateOk()) return renderGate();
+  try {
+    const keys = Object.keys(CONFIG.sources);
+    const results = await Promise.allSettled(keys.map(k => loadCsv(CONFIG.sources[k])));
+    results.forEach((r, i) => { state.data[keys[i]] = r.status === 'fulfilled' ? r.value : []; });
+    const failed = keys.filter((k, i) => results[i].status === 'rejected' && k !== 'meta');
+    if (failed.length === keys.length - 1) throw new Error('None of the data could be loaded. Check the links in CONFIG.');
+    prepare(); renderNav(); render();
+    if (failed.length) console.warn('Failed to load:', failed.join(', '));
+  } catch (e) {
+    document.getElementById('main').innerHTML = '<div class="error">' + esc(e.message) + '</div>';
+  }
+}
+
+/* ---------- Data prep ---------- */
+function parseDate(s) {
+  if (!s) return null;
+  const m = String(s).match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+  const d = new Date(s); return isNaN(d) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+function seasonOf(d) {
+  if (!d) return 'Unknown';
+  const y = d.getMonth() + 1 >= CONFIG.seasonStartMonth ? d.getFullYear() : d.getFullYear() - 1;
+  return y + '-' + (y + 1);
+}
+function shortName(n) { n = String(n || '').trim(); if (CONFIG.nameStyle !== 'first') return n; return n.split(/\s+/)[0]; }
+function num(v) { const n = parseFloat(String(v).replace(/[$,]/g, '')); return isNaN(n) ? null : n; }
+function money(v) { const n = num(v); return n === null ? String(v || '') : n.toLocaleString('en-US', { style: 'currency', currency: 'USD' }); }
+function today0() { const t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()); }
+
+function prepare() {
+  const f = CONFIG.fields.scores;
+  state.scores = (state.data.scores || []).map(r => {
+    const d = parseDate(r[f.date]);
+    const o = { raw: r, fullName: r[f.name], name: shortName(r[f.name]), date: d, season: seasonOf(d), meet: r[f.meet], session: r[f.session], level: r[f.level], division: r[f.division], ev: {}, pl: {} };
+    Object.keys(f.events).forEach(e => { o.ev[e] = num(r[f.events[e]]); o.pl[e] = r[f.places[e]] || ''; });
+    return o;
+  }).filter(s => s.name);
+  const mf = CONFIG.fields.meets;
+  state.meets = (state.data.meets || []).map(r => ({ raw: r, name: r[mf.name], date: parseDate(r[mf.date]), time: r[mf.time], athletes: r[mf.athletes] })).filter(m => m.name);
+
+  const seasons = new Set(state.scores.map(s => s.season).filter(s => s !== 'Unknown'));
+  state.currentSeason = seasonOf(new Date());
+  seasons.add(state.currentSeason);
+  state.seasons = [...seasons].sort().reverse();
+  state.seasonTab = state.currentSeason;
+  const now = new Date(); state.calMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const lu = (state.data.meta || []).find(r => r.key === 'last_updated');
+  state.updated = lu ? new Date(lu.value) : null;
+}
+
+/* ---------- Nav ---------- */
+function applyTheme() {
+  const r = document.documentElement.style;
+  if (CONFIG.colors.rail) { r.setProperty('--rail', CONFIG.colors.rail); r.setProperty('--rail-2', mix(CONFIG.colors.rail, '#ffffff', 0.08)); }
+  if (CONFIG.glitter === false) document.querySelectorAll('.sparkle').forEach(e => e.classList.remove('sparkle'));
+  if (CONFIG.colors.primary) { r.setProperty('--ink', CONFIG.colors.primary); r.setProperty('--ink-2', mix(CONFIG.colors.primary, '#ffffff', 0.12)); r.setProperty('--ink-soft', mix(CONFIG.colors.primary, '#ffffff', 0.62)); }
+  if (CONFIG.colors.accent) { r.setProperty('--coral', CONFIG.colors.accent); r.setProperty('--coral-soft', mix(CONFIG.colors.accent, '#ffffff', 0.85)); }
+}
+function mix(a, b, t) {
+  const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const [x, y] = [p(a), p(b)];
+  return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, '0')).join('');
+}
+function renderNav() {
+  const nav = document.getElementById('nav');
+  nav.innerHTML = '<div class="brand">' + (CONFIG.logo ? '<img class="logo" src="' + esc(CONFIG.logo) + '" alt="">' : '') + esc(CONFIG.title) + (CONFIG.subtitle ? '<small>' + esc(CONFIG.subtitle) + '</small>' : '') + '</div>';
+  SECTIONS.forEach(([id, label]) => {
+    const b = document.createElement('button'); b.innerHTML = '<span class="dot"></span>' + esc(label); b.className = id === state.section ? 'active' : '';
+    b.onclick = () => go(id);
+    nav.appendChild(b);
+  });
+  const u = document.createElement('div'); u.className = 'updated';
+  u.textContent = state.updated ? 'Scores and roster update daily. Last refresh ' + state.updated.toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '.' : '';
+  nav.appendChild(u);
+}
+function go(id) { state.section = id; location.hash = id; renderNav(); render(); window.scrollTo(0, 0); }
+
+function render() {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  ({ home: renderHome, roster: renderRoster, calendar: renderCalendar, season: renderSeason, best: () => renderAgg('best'), average: () => renderAgg('average'), chalk: renderChalk })[state.section](main);
+}
+
+/* ---------- Home ---------- */
+function renderHome(main) {
+  const t0 = today0();
+  const upcoming = state.meets.filter(m => m.date && m.date >= t0).sort((a, b) => a.date - b.date);
+  const next = upcoming[0];
+  const sameDay = next ? upcoming.filter(m => +m.date === +next.date) : [];
+  let hero;
+  if (next) {
+    const days = Math.round((next.date - t0) / 86400000);
+    const allAth = [...new Set(sameDay.flatMap(m => (m.athletes || '').split(',').map(s => s.trim()).filter(Boolean)))];
+    const title = sameDay.length > 1 ? next.name.replace(/\s*[-:]\s*Session.*$/i, '') : next.name;
+    hero = '<section class="hero ' + (CONFIG.glitter === false ? '' : 'sparkle') + '"><div class="glow"></div><div class="kicker">Next meet</div>' +
+      '<div class="days"><b>' + (days === 0 ? 'Today' : days) + '</b><small>' + (days === 0 ? 'Good luck out there' : days === 1 ? 'day to go' : 'days to go') + '</small></div>' +
+      '<div class="meet"><h2>' + esc(title) + '</h2><div class="when">' + next.date.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' }) +
+      (sameDay.length > 1 ? ', ' + sameDay.length + ' sessions' : next.time ? ' at ' + esc(next.time) : '') + '</div>' +
+      '<div class="chips">' + allAth.map(a => '<span>' + esc(a) + '</span>').join('') + '</div>' +
+      '<div class="more"><button onclick="go(\'calendar\')">See the full calendar</button></div></div></section>';
+  } else {
+    hero = '<section class="hero ' + (CONFIG.glitter === false ? '' : 'sparkle') + '"><div class="glow"></div><div class="kicker">Next meet</div><div class="meet" style="grid-column:1/-1"><h2>Nothing on the calendar yet</h2><div class="when">Meets will show up here as soon as they are added.</div></div></section>';
+  }
+
+  // Coming up: the next few meets after the one in the hero.
+  const list = upcoming.slice(0, 8);
+  const byDate = [];
+  list.forEach(m => { const k = +m.date; const g = byDate.find(x => x.k === k); if (g) g.items.push(m); else byDate.push({ k, date: m.date, items: [m] }); });
+  const podium = '<div class="podium"><header style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><h2>Coming up</h2><span style="color:var(--muted);font-size:13px">' + (list.length ? list.length + ' session' + (list.length === 1 ? '' : 's') + ' scheduled' : '') + '</span></header>' +
+    (byDate.length ? byDate.map(g => '<div class="row" style="align-items:flex-start"><span class="when-col"><b>' + g.date.toLocaleDateString([], { month: 'short', day: 'numeric' }) + '</b><small>' + g.date.toLocaleDateString([], { weekday: 'short' }) + '</small></span><span class="who">' +
+        g.items.map(m => '<div class="sess" onclick="showMeetByName(' + JSON.stringify(m.name).replace(/"/g, '&quot;') + ')">' + esc(m.name) + (m.time ? '<small>' + esc(m.time) + (m.athletes ? ', ' + m.athletes.split(',').length + ' athletes' : '') + '</small>' : '') + '</div>').join('') + '</span></div>').join('') +
+      '<div style="margin-top:14px"><button class="btn" onclick="go(\'calendar\')">Open the calendar</button></div>'
+      : '<div class="empty"><strong>Nothing scheduled yet</strong>Meets show up here as soon as they are added.</div>') + '</div>';
+
+  const f = CONFIG.fields.chalk, cf = (state.data.chalk || [])[0];
+  let fund = '';
+  if (cf) {
+    const dep = num(cf[f.deposit]) || 0, sp = num(cf[f.spent]) || 0, bal = num(cf[f.balance]); const balance = bal === null ? dep - sp : bal;
+    const pct = dep ? Math.max(0, Math.min(100, (balance / dep) * 100)) : 0;
+    fund = '<div class="fund"><h2>Chalk fund</h2><div class="big">' + money(balance) + '</div><div style="color:var(--muted);font-size:14px">left to spend</div>' +
+      '<div class="bar"><i style="width:' + pct.toFixed(1) + '%"></i></div><div class="legend"><span>' + money(sp) + ' spent</span><span>' + money(dep) + ' deposited</span></div>' +
+      '<div style="margin-top:auto;padding-top:16px"><button class="btn" onclick="go(\'chalk\')">Details</button></div></div>';
+  }
+  main.innerHTML = hero + '<div class="home-grid">' + podium + fund + '</div>';
+}
+
+/* ---------- Roster ---------- */
+function renderRoster(main) {
+  const f = CONFIG.fields.athletes;
+  let rows = state.data.athletes || [];
+  if (f.filterField) rows = rows.filter(r => String(r[f.filterField]).toLowerCase() === String(f.filterValue).toLowerCase());
+  const cols = CONFIG.rosterColumns.filter(c => rows.length && c in rows[0]);
+  const levels = [...new Set(rows.map(r => r[f.level]).filter(Boolean))].sort((a, b) => num(a) - num(b));
+
+  main.innerHTML = '<h1>Team Roster</h1><p class="lede">' + rows.length + ' athletes. Tap a phone number or email to reach a parent.</p>' +
+    '<div class="controls"><input type="search" id="q" placeholder="Search by name, parent, or anything else"><select id="lvl"><option value="">All levels</option>' +
+    levels.map(l => '<option>Level ' + esc(l) + '</option>').join('') + '</select></div>' +
+    '<div class="panel"><div class="scroll"><table id="t"></table></div><div class="count" id="count"></div></div>';
+
+  const draw = () => {
+    const q = document.getElementById('q').value.toLowerCase();
+    const lvl = document.getElementById('lvl').value.replace('Level ', '');
+    let out = rows.filter(r => (!lvl || r[f.level] === lvl) && (!q || cols.some(c => r[c].toLowerCase().includes(q))));
+    const s = state.sort.roster || { col: f.first, dir: 'asc' };
+    out.sort((a, b) => cmp(a[s.col], b[s.col]) * (s.dir === 'asc' ? 1 : -1));
+    drawTable(document.getElementById('t'), cols, out, s, c => { toggleSort('roster', c, f.first); draw(); }, r => 'lvl l' + esc(r[f.level]));
+    document.getElementById('count').textContent = out.length + ' of ' + rows.length + ' athletes';
+  };
+  document.getElementById('q').oninput = draw;
+  document.getElementById('lvl').onchange = draw;
+  draw();
+}
+
+/* ---------- Calendar ---------- */
+function renderCalendar(main) {
+  const m = state.calMonth, today = new Date();
+  main.innerHTML = '<h1>Meet Calendar</h1><p class="lede">Tap any meet for the time and who is competing.</p>' +
+    '<div class="cal-head"><h2>' + m.toLocaleString([], { month: 'long', year: 'numeric' }) + '</h2><button class="btn" id="prev" aria-label="Previous month">&larr;</button><button class="btn" id="next" aria-label="Next month">&rarr;</button><button class="btn" id="today">Today</button></div>' +
+    '<div class="cal" id="cal"></div><div class="upcoming"><h2>Coming up</h2><div class="panel" id="up"></div></div>';
+  document.getElementById('prev').onclick = () => { state.calMonth = new Date(m.getFullYear(), m.getMonth() - 1, 1); render(); };
+  document.getElementById('next').onclick = () => { state.calMonth = new Date(m.getFullYear(), m.getMonth() + 1, 1); render(); };
+  document.getElementById('today').onclick = () => { state.calMonth = new Date(today.getFullYear(), today.getMonth(), 1); render(); };
+
+  const cal = document.getElementById('cal');
+  ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(d => { const e = document.createElement('div'); e.className = 'dow'; e.textContent = d; cal.appendChild(e); });
+  const first = new Date(m.getFullYear(), m.getMonth(), 1);
+  const start = new Date(first); start.setDate(1 - first.getDay());
+  for (let i = 0; i < 42; i++) {
+    const d = new Date(start); d.setDate(start.getDate() + i);
+    const cell = document.createElement('div');
+    cell.className = 'day' + (d.getMonth() !== m.getMonth() ? ' other' : '') + (sameDay(d, today) ? ' today' : '');
+    cell.innerHTML = '<span class="dnum">' + d.getDate() + '</span>';
+    state.meets.filter(x => x.date && sameDay(x.date, d)).forEach(x => {
+      const ev = document.createElement('div'); ev.className = 'ev'; ev.innerHTML = esc(x.name) + (x.time ? '<small>' + esc(x.time) + '</small>' : ''); ev.title = x.name;
+      ev.onclick = () => showMeet(x); cell.appendChild(ev);
+    });
+    cal.appendChild(cell);
+  }
+  const up = document.getElementById('up');
+  const future = state.meets.filter(x => x.date && x.date >= today0()).sort((a, b) => a.date - b.date).slice(0, 12);
+  if (!future.length) up.innerHTML = '<div class="empty"><strong>Nothing scheduled</strong>Meets appear here once they are on the calendar.</div>';
+  future.forEach(x => {
+    const r = document.createElement('div'); r.className = 'row';
+    r.innerHTML = '<span class="date">' + x.date.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }) + '</span><span>' + esc(x.name) + (x.time ? ' <span style="color:var(--muted)">' + esc(x.time) + '</span>' : '') + '</span><span class="ath">' + esc(x.athletes || '') + '</span>';
+    r.onclick = () => showMeet(x); up.appendChild(r);
+  });
+}
+function showMeetByName(n) { const x = state.meets.find(m => m.name === n); if (x) showMeet(x); }
+function showMeet(x) {
+  const chips = (x.athletes || '').split(',').map(s => s.trim()).filter(Boolean).map(a => '<span>' + esc(a) + '</span>').join('');
+  openModal('<h3>' + esc(x.name) + '</h3><div class="kv"><div class="k">When</div><div>' + (x.date ? x.date.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : '') + (x.time ? '<br>' + esc(x.time) : '') + '</div>' +
+    '<div class="k">Competing</div><div class="chips">' + (chips || '<span style="background:none;color:var(--muted);padding:0">Not listed yet</span>') + '</div></div>');
+}
+
+/* ---------- This Season's Scores ---------- */
+function renderSeason(main) {
+  const f = CONFIG.fields.scores, evKeys = Object.keys(f.events);
+  const all = state.scores.filter(s => s.season === state.currentSeason);
+  const athletes = [...new Set(all.map(s => s.name))].sort();
+  const meets = [...new Set(all.map(s => s.meet).filter(Boolean))];
+
+  main.innerHTML = '<h1>This Season\'s Scores</h1><p class="lede">' + state.currentSeason + ' season, ' + all.length + ' results so far. Medals mark places 1 to 3.</p>' +
+    '<div class="controls"><select id="ath"><option value="">All athletes</option>' + athletes.map(a => '<option>' + esc(a) + '</option>').join('') + '</select>' +
+    '<select id="meet"><option value="">All meets</option>' + meets.map(a => '<option>' + esc(a) + '</option>').join('') + '</select>' +
+    '<select id="grp"><option value="meet">Grouped by meet</option><option value="name">Grouped by athlete</option><option value="">No grouping</option></select></div>' +
+    '<div class="panel"><div class="scroll"><table id="t"></table></div></div>';
+
+  const draw = () => {
+    const ath = document.getElementById('ath').value, meet = document.getElementById('meet').value, grp = document.getElementById('grp').value;
+    let rows = all.filter(s => (!ath || s.name === ath) && (!meet || s.meet === meet)).sort((a, b) => (b.date || 0) - (a.date || 0) || cmp(a.name, b.name));
+    const t = document.getElementById('t');
+    if (!rows.length) { t.innerHTML = '<tr><td class="empty"><strong>No scores yet this season</strong>They will appear here the day after the first meet.</td></tr>'; return; }
+    const head = ['Athlete', 'Date', 'Meet', 'Session', 'Level', 'Division', ...evKeys];
+    let html = '<thead><tr>' + head.map((h, i) => '<th class="' + (i >= 6 ? 'num' : '') + '">' + esc(h) + '</th>').join('') + '</tr></thead><tbody>';
+    let lastGroup = null;
+    rows.forEach(s => {
+      const g = grp === 'meet' ? s.meet : grp === 'name' ? s.name : null;
+      if (grp && g !== lastGroup) { html += '<tr class="group"><td colspan="' + head.length + '">' + esc(g || 'Unknown') + '</td></tr>'; lastGroup = g; }
+      html += '<tr><td>' + esc(s.name) + '</td><td>' + (s.date ? s.date.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }) : '') + '</td><td>' + esc(s.meet || '') + '</td><td>' + esc(s.session || '') + '</td><td>' + esc(s.level || '') + '</td><td>' + esc(s.division || '') + '</td>' +
+        evKeys.map(e => '<td class="num">' + (s.ev[e] === null ? '' : '<span class="score">' + s.ev[e].toFixed(3) + '</span>' + placeTag(s.pl[e])) + '</td>').join('') + '</tr>';
+    });
+    t.innerHTML = html + '</tbody>';
+  };
+  ['ath', 'meet', 'grp'].forEach(id => document.getElementById(id).onchange = draw);
+  draw();
+}
+function placeTag(p) {
+  if (!p) return '';
+  const n = parseInt(p); const cls = n >= 1 && n <= 3 ? ' p' + n : '';
+  return '<span class="place' + cls + '">' + esc(p) + '</span>';
+}
+
+/* ---------- Best / Average ---------- */
+function renderAgg(mode) {
+  const f = CONFIG.fields.scores, evKeys = Object.keys(f.events);
+  const isBest = mode === 'best';
+  const main = document.getElementById('main');
+  main.innerHTML = '<h1>' + (isBest ? 'Best Scores' : 'Average Scores') + '</h1><p class="lede">' + (isBest ? 'Each athlete\'s highest score on every event, listed alphabetically.' : 'Each athlete\'s average across every meet they competed in, listed alphabetically.') + ' Pick a season.</p><div class="tabs" id="tabs"></div><div class="grid" id="grid"></div>';
+
+  const tabs = document.getElementById('tabs');
+  [...state.seasons, 'All records'].forEach(s => {
+    const b = document.createElement('button'); b.textContent = s; b.className = s === state.seasonTab ? 'active' : '';
+    b.onclick = () => { state.seasonTab = s; renderAgg(mode); }; tabs.appendChild(b);
+  });
+
+  const rows = state.scores.filter(s => state.seasonTab === 'All records' || s.season === state.seasonTab);
+  const grid = document.getElementById('grid');
+  evKeys.forEach(e => {
+    const by = {};
+    rows.forEach(s => { if (s.ev[e] !== null) (by[s.name] = by[s.name] || []).push(s.ev[e]); });
+    const list = Object.keys(by).map(n => ({ name: n, value: isBest ? Math.max(...by[n]) : by[n].reduce((a, b) => a + b, 0) / by[n].length, count: by[n].length })).sort((a, b) => a.name.localeCompare(b.name));
+    const card = document.createElement('div'); card.className = 'card';
+    card.innerHTML = '<header><h3>' + esc(e === 'AA' ? 'All-around' : e) + '</h3><span>' + (list.length ? list.length + ' athletes' : '') + '</span></header>' +
+      (list.length ? '<div class="scroll"><table><tbody>' + list.map(r =>
+        '<tr><td>' + esc(r.name) + (isBest ? '' : '<span class="sub">' + r.count + ' meet' + (r.count === 1 ? '' : 's') + '</span>') + '</td><td class="num score">' + r.value.toFixed(3) + '</td></tr>').join('') +
+        '</tbody></table></div>' : '<div class="empty"><strong>No scores yet</strong>Nothing recorded for this season.</div>');
+    grid.appendChild(card);
+  });
+}
+
+/* ---------- Chalk Fund ---------- */
+function renderChalk(main) {
+  const f = CONFIG.fields.chalk;
+  const rows = state.data.chalk || [];
+  main.innerHTML = '<h1>Chalk Fund</h1><p class="lede">Team money in, team money out.</p>';
+  if (!rows.length) { main.innerHTML += '<div class="panel"><div class="empty"><strong>No chalk fund data</strong>Add a row in Airtable and it will show up tomorrow.</div></div>'; return; }
+  rows.forEach(r => {
+    const dep = num(r[f.deposit]), sp = num(r[f.spent]);
+    const bal = r[f.balance] !== undefined && r[f.balance] !== '' ? r[f.balance] : (dep !== null && sp !== null ? dep - sp : '');
+    main.innerHTML += (rows.length > 1 ? '<h2 style="margin:18px 0 10px">' + esc(r.Name || '') + '</h2>' : '') +
+      '<div class="stats"><div class="stat"><div class="label">Deposited</div><div class="value">' + money(r[f.deposit]) + '</div></div>' +
+      '<div class="stat"><div class="label">Spent</div><div class="value">' + money(r[f.spent]) + '</div></div>' +
+      '<div class="stat balance"><div class="label">Balance</div><div class="value">' + money(bal) + '</div></div></div>';
+  });
+}
+
+/* ---------- Helpers ---------- */
+function drawTable(t, cols, rows, sort, onSort, rowClass) {
+  t.innerHTML = '<thead><tr>' + cols.map(c => '<th class="' + (sort.col === c ? 'sorted' : '') + '" data-c="' + esc(c) + '">' + esc(c) + (sort.col === c ? (sort.dir === 'asc' ? ' ↑' : ' ↓') : '') + '</th>').join('') + '</tr></thead><tbody>' +
+    (rows.length ? rows.map(r => '<tr>' + cols.map((c, i) => '<td class="' + (i === 0 && rowClass ? rowClass(r) : '') + '">' + cellHtml(c, r[c]) + '</td>').join('') + '</tr>').join('') : '<tr><td colspan="' + cols.length + '" class="empty"><strong>No matches</strong>Try a different search.</td></tr>') + '</tbody>';
+  t.querySelectorAll('th').forEach(th => th.onclick = () => onSort(th.dataset.c));
+}
+function cellHtml(col, v) {
+  const s = String(v ?? '');
+  if (!s) return '';
+  if (/mail/i.test(col) && s.includes('@')) return '<a href="mailto:' + esc(s) + '" style="color:var(--ink);font-weight:500">' + esc(s) + '</a>';
+  if (/phone/i.test(col)) return '<a href="tel:' + esc(s.replace(/[^\d+]/g, '')) + '" style="color:var(--ink);font-weight:500;text-decoration:none">' + esc(s) + '</a>';
+  return esc(s);
+}
+function toggleSort(key, col, def) {
+  const cur = state.sort[key] || { col: def, dir: 'asc' };
+  state.sort[key] = { col, dir: cur.col === col && cur.dir === 'asc' ? 'desc' : 'asc' };
+}
+function cmp(a, b) { const x = num(a), y = num(b); if (x !== null && y !== null && String(a).trim() !== '' && String(b).trim() !== '') return x - y; return String(a ?? '').localeCompare(String(b ?? '')); }
+function sameDay(a, b) { return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
+function esc(v) { return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function openModal(html) { document.getElementById('modal').innerHTML = '<button class="btn close" onclick="closeModal()">Close</button>' + html; document.getElementById('overlay').classList.add('open'); }
+function closeModal() { document.getElementById('overlay').classList.remove('open'); }
+document.getElementById('overlay').onclick = e => { if (e.target.id === 'overlay') closeModal(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+const h = location.hash.replace('#', '');
+if (SECTIONS.some(s => s[0] === h)) state.section = h;
+init();
+</script>
+</body>
+</html>
